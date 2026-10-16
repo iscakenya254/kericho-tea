@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHEPSIR TEA | Tea in Motion</title>
+
+<style>
+:root {
+    --brown: #32180f;
+    --cream: #f5eee3;
+    --sage: #a3b4ae;
+    --glass: rgba(226, 239, 232, .76);
+    --ink: #20140e;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--brown);
+    color: var(--ink);
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* PERMANENT BROWN BACKGROUND LOCK */
+.permanent-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -10;
+    background: var(--brown);
+}
+
+/* HERO SECTION */
+.hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 52% 48%;
+    position: relative;
+    isolation: isolate;
+    background: transparent;
+}
+
+.hero-left {
+    background: var(--sage);
+    padding: 35px 7%;
+    display: flex;
+    flex-direction: column;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: 3px;
+}
+
+nav .links {
+    display: flex;
+    gap: 20px;
+}
+
+nav a {
+    color: var(--ink);
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.intro {
+    margin: auto 0;
+    padding: 65px 0;
+}
+
+.eyebrow {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+.intro h1,
+.product-info h2 {
+    font-family: Georgia, serif;
+    font-weight: normal;
+    font-size: clamp(42px, 5vw, 72px);
+    line-height: .99;
+    letter-spacing: -2px;
+}
+
+.intro p,
+.product-info p {
+    max-width: 360px;
+    font-size: 14px;
+    line-height: 1.9;
+    margin-top: 23px;
+}
+
+.shop-button {
+    display: inline-block;
+    padding: 15px 28px;
+    background: var(--ink);
+    color: white;
+    text-decoration: none;
+    margin-top: 25px;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+/* HERO RIGHT VIDEOS */
+.hero-right {
+    position: relative;
+    overflow: hidden;
+    background: #573726;
+}
+
+.hero-right video {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+}
+
+.hero-right video.active {
+    opacity: 1;
+}
+
+.video-caption {
+    position: absolute;
+    bottom: 35px;
+    left: 28px;
+    color: white;
+    z-index: 1;
+}
+
+.video-caption h2 {
+    font: normal clamp(24px, 3vw, 40px) Georgia, serif;
+}
+
+/* SECOND SECTION: GLASS BACKGROUND SITTING ON BROWN */
+.product-section {
+    min-height: 160vh;
+    padding: 100px 7%;
+    position: relative;
+    isolation: isolate;
+
+    background: var(--glass);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+
+    border-top: 1px solid rgba(255,255,255,.4);
+    border-bottom: 1px solid rgba(255,255,255,.2);
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 135vh;
+    gap: 50px;
+    position: relative;
+}
+
+.product-left {
+    position: relative;
+    min-height: 135vh;
+    border-radius: 35px;
+    background: rgba(255,255,255,.12);
+}
+
+.product-left::before {
+    content: "";
+    position: absolute;
+    width: 85%;
+    aspect-ratio: 1;
+    top: 48%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: rgba(255,255,255,.22);
+    filter: blur(2px);
+}
+
+.product-info {
+    padding: 70px 10px;
+    align-self: center;
+    position: relative;
+    z-index: 1;
+}
+
+.product-info h2 {
+    font-size: clamp(40px, 4.5vw, 65px);
+}
+
+.product-info p {
+    color: #45554c;
+}
+
+.flavours {
+    margin-top: 25px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    line-height: 2;
+}
+
+.price {
+    margin-top: 25px;
+    font: 32px Georgia, serif;
+}
+
+/* FOOTER */
+footer {
+    padding: 45px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    color: var(--cream);
+    background: var(--brown);
+    font-size: 11px;
+    position: relative;
+    z-index: 30;
+}
+
+/* LARGER PROMINENT MOVING TEABAG */
+.tea-flight {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: clamp(480px, 55vw, 700px);
+    height: clamp(600px, 80vw, 960px);
+    z-index: 20;
+    pointer-events: none;
+    transform-origin: center center;
+    will-change: transform;
+}
+
+.tea-flight img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0;
+    filter: drop-shadow(18px 28px 26px #20140e55);
+}
+
+.tea-flight img.active {
+    opacity: 1;
+}
+
+/* Responsive layout */
+@media (max-width: 700px) {
+    .hero {
+        grid-template-columns: 1fr;
+        grid-template-rows: 58vh 42vh;
+    }
+
+    .hero-left {
+        padding: 22px 6%;
+    }
+
+    nav .links {
+        gap: 10px;
+    }
+
+    nav a {
+        font-size: 10px;
+    }
+
+    .intro {
+        padding: 30px 0;
+    }
+
+    .intro h1 {
+        font-size: clamp(38px, 9vw, 56px);
+    }
+
+    .intro p {
+        font-size: 12px;
+        margin-top: 15px;
+    }
+
+    .product-section {
+        padding: 55px 5%;
+    }
+
+    .product-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .product-left {
+        min-height: 115vh;
+    }
+
+    .product-info {
+        padding: 40px 10px;
+        align-self: start;
+    }
+
+    .tea-flight {
+        width: clamp(200px, 50vw, 300px);
+        height: clamp(300px, 75vw, 440px);
+    }
+
+    footer {
+        justify-content: center;
+        text-align: center;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- PERMANENT FOUNDATION BACKGROUND -->
+<div class="permanent-bg"></div>
+
+<!-- HERO SECTION -->
+<section class="hero" id="home">
+    <div class="hero-left">
+        <nav>
+            <div class="logo">CHEPSIR</div>
+            <div class="links">
+                <a href="#home">Home</a>
+                <a href="#story">Story</a>
+                <a href="#product">Tea</a>
+            </div>
+        </nav>
+
+        <div class="intro">
+            <div class="eyebrow">Highland Kenyan Harvest</div>
+
+            <h1>Pure tea in<br>every sip.</h1>
+
+            <p>
+                Discover premium Chepsir tea harvested from 
+                misty high-altitude slopes, crafted for slower mornings, 
+                richer flavors, and better everyday moments.
+            </p>
+
+            <a class="shop-button" href="#product">
+                DISCOVER OUR TEA
+            </a>
+        </div>
+    </div>
+
+    <div class="hero-right">
+        <!-- Video 1: Plays for 3 seconds -->
+        <video id="vid1" class="active" autoplay muted playsinline>
+            <source src="tea-leaves.mp4" type="video/mp4">
+        </video>
+        <!-- Video 2: Takes over after 3 seconds and loops -->
+        <video id="vid2" muted loop playsinline>
+            <source src="t.mp4" type="video/mp4">
+        </video>
+
+        <div class="video-caption">
+            <div class="eyebrow">From Kenyan hills to your cup</div>
+            <h2>Feel the highland difference.</h2>
+        </div>
+    </div>
+</section>
+
+<!-- GLASSMORPHISM PRODUCT SECTION -->
+<section class="product-section" id="product">
+    <div class="product-grid">
+        <div class="product-left"></div>
+
+        <div class="product-info" id="story">
+            <div class="eyebrow">The Chepsir Collection</div>
+
+            <h2>Your daily<br>cup of warmth.</h2>
+
+            <p>
+                Handpicked tea leaves bring a deeply comforting, 
+                rich aroma to your daily ritual. Take a moment for 
+                yourself and savor the pure quality of authentic Kenyan tea.
+            </p>
+
+            <div class="flavours">
+                FLAVOUR: RICH · BOLD · AROMATIC
+            </div>
+
+            <div class="price">KSh 850</div>
+
+            <a class="shop-button" href="#home">DISCOVER CHEPSIR</a>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="logo">CHEPSIR</div>
+    <p>Developed by PROGRAMISS254© 2026</p>
+    <p>Good tea. Better moments.</p>
+</footer>
+
+<!-- LARGE SHARED MOVING PRODUCT (f1, f2, f3, f4) -->
+<div class="tea-flight" id="teaFlight">
+    <img src="f1.png" class="active" alt="Teabag Frame 1">
+    <img src="f3.png" alt="Teabag Frame 2">
+    <img src="f2.png" alt="Teabag Frame 3">
+    <img src="f2.png" alt="Teabag Frame 4">
+</div>
+
+<script>
+/* HERO VIDEO SWITCHING AFTER 3 SECONDS */
+const vid1 = document.getElementById("vid1");
+const vid2 = document.getElementById("vid2");
+
+setTimeout(() => {
+    vid2.play();
+    vid2.classList.add("active");
+    vid1.classList.remove("active");
+}, 3000);
+
+/* TEABAG SCROLL ANIMATION */
+const flight = document.getElementById("teaFlight");
+const bagImages = [...flight.querySelectorAll("img")];
+const hero = document.querySelector(".hero");
+const productSection = document.querySelector(".product-section");
+const productLeft = document.querySelector(".product-left");
+
+let ticking = false;
+
+function getAnchor(element, xRatio, yRatio) {
+    const rect = element.getBoundingClientRect();
+    return {
+        x: rect.left + window.scrollX + rect.width * xRatio,
+        y: rect.top + window.scrollY + rect.height * yRatio
+    };
+}
+
+function mix(a, b, t) {
+    return a + (b - a) * t;
+}
+
+function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
+}
+
+function smoothstep(t) {
+    t = clamp(t, 0, 1);
+    return t * t * (3 - 2 * t);
+}
+
+function updateFlight() {
+    ticking = false;
+
+    const scrollY = window.scrollY;
+    const viewportW = window.innerWidth;
+    const viewportH = window.innerHeight;
+
+    const bagW = flight.offsetWidth;
+    const bagH = flight.offsetHeight;
+
+    const stage1 = {
+        x: window.scrollX + viewportW * 0.52,
+        y: window.scrollY + viewportH * 0.45
+    };
+
+    const stage2 = {
+        x: window.scrollX + viewportW * 0.50,
+        y: window.scrollY + viewportH * 0.88
+    };
+
+    const stage3 = getAnchor(productLeft, 0.50, 0.45);
+    const stage4 = getAnchor(productLeft, 0.30, 0.80);
+
+    const end1 = hero.offsetHeight * 0.60;
+    const end2 = hero.offsetHeight * 1.05;
+    const end3 = hero.offsetHeight + productSection.offsetHeight * 0.45;
+    const end4 = hero.offsetHeight + productSection.offsetHeight * 0.78;
+
+    let from, to, t, rotation, imageIndex;
+
+    if (scrollY < end1) {
+        from = stage1;
+        to = stage1;
+        t = 0;
+        rotation = 0;
+        imageIndex = 0; // f1.png
+    } else if (scrollY < end2) {
+        from = stage1;
+        to = stage2;
+        t = smoothstep((scrollY - end1) / (end2 - end1));
+        rotation = mix(0, 360, t);
+        imageIndex = t < 0.5 ? 0 : 1;
+    } else if (scrollY < end3) {
+        from = stage2;
+        to = stage3;
+        t = smoothstep((scrollY - end2) / (end3 - end2));
+        rotation = mix(360, 720, t);
+        imageIndex = t < 0.5 ? 1 : 2;
+    } else if (scrollY < end4) {
+        from = stage3;
+        to = stage4;
+        t = smoothstep((scrollY - end3) / (end4 - end3));
+        rotation = mix(720, 1080, t);
+        imageIndex = t < 0.5 ? 2 : 3;
+    } else {
+        from = stage4;
+        to = stage4;
+        t = 1;
+        rotation = 1080;
+        imageIndex = 3; // f4.png
+    }
+
+    const x = mix(from.x, to.x, t) - bagW / 2;
+    const y = mix(from.y, to.y, t) - bagH / 2;
+
+    flight.style.left = `${x}px`;
+    flight.style.top = `${y}px`;
+    flight.style.transform = `rotate(${rotation}deg)`;
+
+    bagImages.forEach((img, index) => {
+        img.classList.toggle("active", index === imageIndex);
+    });
+}
+
+function requestFlightUpdate() {
+    if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(updateFlight);
+    }
+}
+
+window.addEventListener("scroll", requestFlightUpdate, { passive: true });
+window.addEventListener("resize", requestFlightUpdate);
+window.addEventListener("load", requestFlightUpdate);
+
+updateFlight();
+</script>
+
+</body>
+</html>
